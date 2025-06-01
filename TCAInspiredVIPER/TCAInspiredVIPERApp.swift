@@ -12,7 +12,29 @@ import SwiftUI
 struct TCAInspiredVIPERApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            LoginView(store: makeLoginStore())
         }
+    }
+}
+
+// MARK: - private method
+
+private extension TCAInspiredVIPERApp {
+    
+    /// ログイン画面用のStoreを作成します.
+    /// - Returns: LoginStore
+    func makeLoginStore() -> StoreOf<LoginFeature> {
+        
+        // TODO: とりあえずモックを使用している
+        let dependencies = MockLoginContext()
+        let router = LoginRouter()
+        
+        let feature = LoginFeature(
+            context: dependencies,
+            router: router
+        )
+        
+        return StoreOf<LoginFeature>(initialState: LoginState(),
+                                     feature: feature)
     }
 }
