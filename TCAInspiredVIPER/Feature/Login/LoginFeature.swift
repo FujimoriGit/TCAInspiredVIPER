@@ -5,14 +5,29 @@
 //  Created by Daiki Fujimori on 2025/06/01
 //  
 
-struct LoginFeature: Reducer {
+struct LoginFeature {
+
+    // MARK: - private property
+    
+    private let context: LoginContext
+    private let router: LoginWireframe
+    
+    // MARK: - initialize
+    
+    init(context: LoginContext, router: LoginWireframe) {
+        
+        self.context = context
+        self.router = router
+    }
+}
+
+// MARK: - extension (for implements Reducer)
+
+extension LoginFeature: Reducer {
     
     typealias State = LoginState
     typealias Action = LoginAction
-
-    let context: LoginContext
-    let router: LoginWireframe
-
+    
     func reduce(state: inout LoginState, action: LoginAction) -> Effect<LoginAction> {
         
         switch action {

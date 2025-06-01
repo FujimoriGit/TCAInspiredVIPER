@@ -5,7 +5,8 @@
 //  Created by Daiki Fujimori on 2025/06/01
 //  
 
-struct LoginInteractor {
+/// ビジネスロジック
+enum LoginInteractor {
     
     static func login(context: LoginContext,
                       email: String,

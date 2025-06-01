@@ -7,7 +7,6 @@
 
 import Observation
 
-
 /// 画面の状態を管理する基底クラス
 @MainActor
 @Observable
