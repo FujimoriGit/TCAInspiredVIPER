@@ -27,9 +27,9 @@ extension SignUpFeature: Reducer {
     
     struct State: Equatable {
         
-        var email: String = ""
-        var password: String = ""
-        var agreedToTerms: Bool = false
+        var email = ""
+        var password = ""
+        var agreedToTerms = false
     }
     
     // MARK: - Action definition

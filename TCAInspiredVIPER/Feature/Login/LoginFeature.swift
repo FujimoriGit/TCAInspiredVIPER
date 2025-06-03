@@ -29,9 +29,9 @@ extension LoginFeature: Reducer {
     
     struct State: Equatable {
         
-        var email: String = ""
-        var password: String = ""
-        var isLoading: Bool = false
+        var email = ""
+        var password = ""
+        var isLoading = false
         var error: String?
     }
     
