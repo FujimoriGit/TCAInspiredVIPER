@@ -20,6 +20,12 @@ protocol Authenticating {
     func authenticate(email: String, password: String) async throws -> User
 }
 
+struct User: Equatable {
+    
+    let id: Int
+    let name: String
+}
+
 /// ロギングIF
 protocol AnalyticsReporting {
     

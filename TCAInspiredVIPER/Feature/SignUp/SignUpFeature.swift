@@ -23,8 +23,24 @@ struct SignUpFeature {
 
 extension SignUpFeature: Reducer {
     
-    typealias State = SignUpState
-    typealias Action = SignUpAction
+    // MARK: - State definition
+    
+    struct State: Equatable {
+        
+        var email: String = ""
+        var password: String = ""
+        var agreedToTerms: Bool = false
+    }
+    
+    // MARK: - Action definition
+    
+    enum Action {
+        
+        case toggleAgreement(Bool)
+        case submit
+    }
+    
+    // MARK: - reduce definition
     
     func reduce(state: inout State, action: Action) -> Effect<Action> {
         

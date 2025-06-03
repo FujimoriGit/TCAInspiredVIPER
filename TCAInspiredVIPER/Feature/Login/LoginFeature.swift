@@ -25,10 +25,32 @@ struct LoginFeature {
 
 extension LoginFeature: Reducer {
     
-    typealias State = LoginState
-    typealias Action = LoginAction
+    // MARK: - State definition
     
-    func reduce(state: inout LoginState, action: LoginAction) -> Effect<LoginAction> {
+    struct State: Equatable {
+        
+        var email: String = ""
+        var password: String = ""
+        var isLoading: Bool = false
+        var error: String?
+    }
+    
+    // MARK: - Action definition
+    
+    enum Action {
+        
+        case emailChanged(String)
+        case passwordChanged(String)
+        case loginButtonTapped
+        case loginSucceeded(User)
+        case loginFailed(Error)
+        case signUpTapped
+        case forgotPasswordTapped
+    }
+    
+    // MARK: - reduce definition
+    
+    func reduce(state: inout State, action: Action) -> Effect<Action> {
         
         switch action {
             
@@ -42,19 +64,7 @@ extension LoginFeature: Reducer {
 
         case .loginButtonTapped:
             state.isLoading = true
-            return .task { [email = state.email, password = state.password] in
-                
-                do {
-                    
-                    let user = try await LoginInteractor.login(context: context,
-                                                               email: email,
-                                                               password: password)
-                    return .loginSucceeded(user)
-                } catch {
-                    
-                    return .loginFailed(error)
-                }
-            }
+            return executeLoginTask(state: state)
             
         case .loginSucceeded:
             state.isLoading = false
@@ -70,6 +80,28 @@ extension LoginFeature: Reducer {
 
         case .forgotPasswordTapped:
             return .navigation { router.navigate(to: .forgotPassword) }
+        }
+    }
+}
+
+// MARK: - private method
+
+private extension LoginFeature {
+    
+    func executeLoginTask(state: State) -> Effect<Action> {
+        
+        .task { [email = state.email, password = state.password] in
+            
+            do {
+                
+                let user = try await LoginInteractor.login(context: context,
+                                                           email: email,
+                                                           password: password)
+                return .loginSucceeded(user)
+            } catch {
+                
+                return .loginFailed(error)
+            }
         }
     }
 }

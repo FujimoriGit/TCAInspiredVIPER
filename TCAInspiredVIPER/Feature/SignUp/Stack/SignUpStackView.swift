@@ -37,10 +37,15 @@ struct SignUpStackView: View {
                 }
             }
     }
+}
 
+// MARK: - private method
+
+private extension SignUpStackView {
+    
     func makeSignUpStore(router: SignUpWireframe) -> StoreOf<SignUpFeature> {
         
         let feature = SignUpFeature(router: router)
-        return StoreOf<SignUpFeature>(initialState: SignUpState(), feature: feature)
+        return StoreOf<SignUpFeature>(initialState: .init(), feature: feature)
     }
 }

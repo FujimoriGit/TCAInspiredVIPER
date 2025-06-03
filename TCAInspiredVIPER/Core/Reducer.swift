@@ -5,7 +5,7 @@
 //  Created by Daiki Fujimori on 2025/06/01
 //  
 
-/// 状態 (`State`) をアクション (`Action`) に応じてどう変えるか、
+/// 状態(`State`)をアクション(`Action`)に応じてどう変えるか、
 /// また副作用（非同期処理や画面遷移など）を実行するかどうかを定めるプロトコル
 protocol Reducer {
     
@@ -56,7 +56,6 @@ extension Effect {
         
         .init { _ in }
     }
-    
     
     /// 非同期処理を表す`Effect`を返却する.
     /// - Parameter work: 非同期で実行される処理. 完了時に`Action`を返す.

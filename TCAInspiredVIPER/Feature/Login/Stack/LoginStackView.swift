@@ -47,7 +47,6 @@ struct LoginStackView: View {
 
 private extension LoginStackView {
     
-    // TODO: boilerplate多めなので、Containerみたいなのがあった方がいいかも
     /// ログイン画面用のStoreを作成します.
     /// - Returns: LoginStore
     func makeLoginStore(router: LoginWireframe) -> StoreOf<LoginFeature> {
@@ -60,7 +59,7 @@ private extension LoginStackView {
             router: router
         )
         
-        return StoreOf<LoginFeature>(initialState: LoginState(),
+        return StoreOf<LoginFeature>(initialState: .init(),
                                      feature: feature)
     }
 }
