@@ -51,11 +51,10 @@ private extension LoginStackView {
     /// - Returns: LoginStore
     func makeLoginStore(router: LoginWireframe) -> StoreOf<LoginFeature> {
         
-        // TODO: とりあえずモックを使用している
-        let dependencies = MockLoginContext()
-        
+        let context = LoginContext(dependency: .mock)
+
         let feature = LoginFeature(
-            context: dependencies,
+            context: context,
             router: router
         )
         

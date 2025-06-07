@@ -9,12 +9,14 @@ struct SignUpFeature {
     
     // MARK: - private property
     
+    private let context: SignUpContext
     private let router: SignUpWireframe
     
     // MARK: - initialize
     
-    init(router: SignUpWireframe) {
-        
+    init(context: SignUpContext, router: SignUpWireframe) {
+
+        self.context = context
         self.router = router
     }
 }
