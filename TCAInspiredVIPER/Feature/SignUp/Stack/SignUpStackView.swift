@@ -44,8 +44,9 @@ struct SignUpStackView: View {
 private extension SignUpStackView {
     
     func makeSignUpStore(router: SignUpWireframe) -> StoreOf<SignUpFeature> {
-        
-        let feature = SignUpFeature(router: router)
+
+        let context = SignUpContext(dependency: .mock)
+        let feature = SignUpFeature(context: context, router: router)
         return StoreOf<SignUpFeature>(initialState: .init(), feature: feature)
     }
 }

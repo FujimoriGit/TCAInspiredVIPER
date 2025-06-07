@@ -11,8 +11,10 @@ import Testing
 
 struct TCAInspiredVIPERTests {
 
-    @Test func example() async throws {
-        // Write your test here and use APIs like `#expect(...)` to check expected conditions.
+    @Test func testPathStoreStartsEmpty() async throws {
+
+        let store = PathStore()
+        #expect(store.path.isEmpty)
     }
 
 }
