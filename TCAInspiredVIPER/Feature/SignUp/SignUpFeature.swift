@@ -36,8 +36,10 @@ extension SignUpFeature: Reducer {
     
     // MARK: - Action definition
     
-    enum Action {
+    enum Action: Equatable {
         
+        case emailChanged(String)
+        case passwordChanged(String)
         case toggleAgreement(Bool)
         case submit
     }
@@ -47,6 +49,14 @@ extension SignUpFeature: Reducer {
     func reduce(state: inout State, action: Action) -> Effect<Action> {
         
         switch action {
+            
+        case .emailChanged(let email):
+            state.email = email
+            return .none
+            
+        case .passwordChanged(let password):
+            state.password = password
+            return .none
             
         case .toggleAgreement(let agreed):
             state.agreedToTerms = agreed

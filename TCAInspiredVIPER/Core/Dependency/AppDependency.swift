@@ -29,6 +29,24 @@ struct User: Equatable {
     let name: String
 }
 
+enum LoginError: Error, Equatable {
+    
+    case invalidCredentials
+    case networkError(String)
+    
+    var localizedDescription: String {
+        
+        switch self {
+            
+        case .invalidCredentials:
+            return "Invalid email or password."
+            
+        case .networkError(let message):
+            return "Network error: \(message)"
+        }
+    }
+}
+
 /// Analytics interface
 protocol AnalyticsReporting {
 

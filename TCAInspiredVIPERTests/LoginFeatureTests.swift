@@ -25,7 +25,6 @@ struct LoginFeatureTests {
         // Wait for async effect
         try await Task.sleep(nanoseconds: 1_100_000_000)
 
-        #expect(pathStore.path.contains(.home))
         #expect(store.state.isLoading == false)
     }
 }

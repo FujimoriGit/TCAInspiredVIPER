@@ -37,13 +37,13 @@ extension LoginFeature: Reducer {
     
     // MARK: - Action definition
     
-    enum Action {
+    enum Action: Equatable {
         
         case emailChanged(String)
         case passwordChanged(String)
         case loginButtonTapped
         case loginSucceeded(User)
-        case loginFailed(Error)
+        case loginFailed(LoginError)
         case signUpTapped
         case forgotPasswordTapped
     }

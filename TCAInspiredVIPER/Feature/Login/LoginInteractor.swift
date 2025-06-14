@@ -16,13 +16,16 @@ extension LoginInteractor {
                             email: String,
                             password: String) -> Effect<LoginFeature.Action> {
         .task {
+            
             do {
+                
                 let user = try await login(context: context,
                                             email: email,
                                             password: password)
                 return .loginSucceeded(user)
             } catch {
-                return .loginFailed(error)
+                
+                return .loginFailed(.invalidCredentials)
             }
         }
     }

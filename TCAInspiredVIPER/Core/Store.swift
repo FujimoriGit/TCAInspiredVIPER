@@ -12,7 +12,7 @@ import Observation
 @Observable
 final class StoreOf<Feature: Reducer> {
     
-    var state: Feature.State
+    private(set) var state: Feature.State
     private let feature: Feature
 
     init(initialState: Feature.State, feature: Feature) {
