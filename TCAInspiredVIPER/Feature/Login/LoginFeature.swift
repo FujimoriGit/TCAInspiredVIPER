@@ -37,13 +37,13 @@ extension LoginFeature: Reducer {
     
     // MARK: - Action definition
     
-    enum Action {
+    enum Action: Equatable {
         
         case emailChanged(String)
         case passwordChanged(String)
         case loginButtonTapped
         case loginSucceeded(User)
-        case loginFailed(Error)
+        case loginFailed(LoginError)
         case signUpTapped
         case forgotPasswordTapped
     }
@@ -64,7 +64,9 @@ extension LoginFeature: Reducer {
 
         case .loginButtonTapped:
             state.isLoading = true
-            return executeLoginTask(state: state)
+            return LoginInteractor.loginEffect(context: context,
+                                               email: state.email,
+                                               password: state.password)
             
         case .loginSucceeded:
             state.isLoading = false
@@ -86,22 +88,3 @@ extension LoginFeature: Reducer {
 
 // MARK: - private method
 
-private extension LoginFeature {
-    
-    func executeLoginTask(state: State) -> Effect<Action> {
-        
-        .task { [email = state.email, password = state.password] in
-            
-            do {
-                
-                let user = try await LoginInteractor.login(context: context,
-                                                           email: email,
-                                                           password: password)
-                return .loginSucceeded(user)
-            } catch {
-                
-                return .loginFailed(error)
-            }
-        }
-    }
-}

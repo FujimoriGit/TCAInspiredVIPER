@@ -24,10 +24,15 @@ struct SignUpView: View {
     
     var body: some View {
         Form {
-            // TODO: Binding時のAction
-            TextField("Email", text: $store.state.email)
-            SecureField("Password", text: $store.state.password)
-            Toggle("Agree to Terms", isOn: $store.state.agreedToTerms)
+            TextField("Email", text: Binding(
+                get: { store.state.email },
+                set: { store.send(.emailChanged($0)) }))
+            SecureField("Password", text: Binding(
+                get: { store.state.password },
+                set: { store.send(.passwordChanged($0)) }))
+            Toggle("Agree to Terms", isOn: Binding(
+                get: { store.state.agreedToTerms },
+                set: { store.send(.toggleAgreement($0)) }))
             Button("Sign Up") {
                 
                 store.send(.submit)
