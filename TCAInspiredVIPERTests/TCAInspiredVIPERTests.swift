@@ -9,6 +9,7 @@
 import Testing
 @testable import TCAInspiredVIPER
 
+@MainActor
 struct TCAInspiredVIPERTests {
 
     @Test func testPathStoreStartsEmpty() async throws {

@@ -7,19 +7,14 @@
 
 import SwiftUI
 
-enum LoginRoute: Hashable {
+struct LoginRouter: AppWireframe {
     
-    case home
-    case signUp
-    case forgotPassword
-}
-
-protocol LoginWireframe {
-    
-    func navigate(to route: LoginRoute)
-}
-
-final class LoginRouter: LoginWireframe {
+    enum LoginRoute: Hashable {
+        
+        case home
+        case signUp
+        case forgotPassword
+    }
     
     private let pathStore: PathStore
     

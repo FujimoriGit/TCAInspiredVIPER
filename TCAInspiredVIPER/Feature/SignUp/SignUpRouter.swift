@@ -7,18 +7,13 @@
 
 import SwiftUI
 
-enum SignUpRoute: Hashable {
+struct SignUpRouter: AppWireframe {
     
-    case terms
-    case confirm
-}
-
-protocol SignUpWireframe {
-    
-    func navigate(to route: SignUpRoute)
-}
-
-final class SignUpRouter: SignUpWireframe {
+    enum SignUpRoute: Hashable {
+        
+        case terms
+        case confirm
+    }
     
     private let pathStore: PathStore
 

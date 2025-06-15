@@ -14,9 +14,24 @@ struct LoginFeatureTests {
     @Test func testLoginSuccessNavigatesToHome() async throws {
         let pathStore = PathStore()
         let router = LoginRouter(pathStore: pathStore)
-        let context = LoginContext(dependency: .mock)
-        let feature = LoginFeature(context: context, router: router)
-        let store = StoreOf<LoginFeature>(initialState: .init(), feature: feature)
+        let feature = LoginFeature(router: router)
+        let store = DependencyValues.withDependency { value in
+            
+            value.loginContext = .init(authenticate: { _, _ in
+                
+                do {
+                    
+                    try await Task.sleep(nanoseconds: 1_000_000_000)
+                    return User(id: 1, name: "Sample User")
+                } catch {
+                    
+                    throw error
+                }
+            })
+        } operation:  {
+            
+            StoreOf<LoginFeature>(initialState: .init(), feature: feature)
+        }
 
         store.send(.emailChanged("test@example.com"))
         store.send(.passwordChanged("password"))

@@ -6,9 +6,9 @@
 //
 
 /// Business logic for login
-enum LoginInteractor {
+enum LoginInteractor {}
 
-}
+// MARK: - static method
 
 extension LoginInteractor {
 
@@ -31,13 +31,15 @@ extension LoginInteractor {
     }
 }
 
+// MARK: - private method
+
 private extension LoginInteractor {
 
     static func login(context: LoginContext,
                       email: String,
                       password: String) async throws -> User {
-        context.dependency.analytics.log(event: "login_attempt")
-        return try await context.dependency.authAPI.authenticate(email: email,
-                                                                password: password)
+        
+        context.log(event: "login_attempt")
+        return try await context.authenticate(email, password)
     }
 }

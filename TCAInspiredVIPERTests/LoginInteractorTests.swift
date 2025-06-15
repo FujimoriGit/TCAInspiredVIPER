@@ -5,23 +5,31 @@
 //  Created by Daiki Fujimori on 2025/06/07
 //
 
-import Testing
+import XCTest
 @testable import TCAInspiredVIPER
 
-struct LoginInteractorTests {
+final class LoginInteractorTests: XCTestCase {
 
-    @MainActor
-    @Test func testLoginEffectReturnsSuccess() async throws {
+    func testLoginEffectReturnsSuccess() async throws {
+        
+        // モックの設定
+        let mockContext = LoginContext(authenticate: { email, password in
+            XCTAssertEqual(email, "test@example.com")
+            XCTAssertEqual(password, "password")
+            return User(id: 1, name: "Sample User")
+        })
 
-        let context = LoginContext(dependency: .mock)
-        let effect = LoginInteractor.loginEffect(context: context,
+        let effect = LoginInteractor.loginEffect(context: mockContext,
                                                  email: "test@example.com",
                                                  password: "password")
-        var result: LoginFeature.Action?
-        effect.run { action in
-            result = action
+        
+        let receivedAction = try await withCheckedThrowingContinuation { continuation in
+            effect.run { action in
+                continuation.resume(returning: action)
+            }
         }
-        try await Task.sleep(nanoseconds: 1_100_000_000)
-        #expect(result == .loginSucceeded(User(id: 1, name: "Sample User")))
+        
+        // 結果の検証
+        XCTAssertEqual(receivedAction, .loginSucceeded(User(id: 1, name: "Sample User")))
     }
 }
