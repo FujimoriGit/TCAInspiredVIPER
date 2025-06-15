@@ -9,14 +9,14 @@ struct LoginFeature {
 
     // MARK: - private property
     
-    private let context: LoginContext
-    private let router: LoginWireframe
+    private let router: LoginRouter
+    
+    @Dependency(\.loginContext) var context
     
     // MARK: - initialize
     
-    init(context: LoginContext, router: LoginWireframe) {
+    init(router: LoginRouter) {
         
-        self.context = context
         self.router = router
     }
 }

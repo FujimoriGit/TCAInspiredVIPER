@@ -25,7 +25,7 @@ struct LoginStackView: View {
     
     var body: some View {
         LoginView(store: makeLoginStore(router: LoginRouter(pathStore: pathStore)))
-            .navigationDestination(for: LoginRoute.self) { route in
+            .navigationDestination(for: LoginRouter.LoginRoute.self) { route in
                 
                 switch route {
                     
@@ -49,14 +49,9 @@ private extension LoginStackView {
     
     /// ログイン画面用のStoreを作成します.
     /// - Returns: LoginStore
-    func makeLoginStore(router: LoginWireframe) -> StoreOf<LoginFeature> {
-        
-        let context = LoginContext(dependency: .mock)
+    func makeLoginStore(router: LoginRouter) -> StoreOf<LoginFeature> {
 
-        let feature = LoginFeature(
-            context: context,
-            router: router
-        )
+        let feature = LoginFeature(router: router)
         
         return StoreOf<LoginFeature>(initialState: .init(),
                                      feature: feature)

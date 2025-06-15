@@ -14,8 +14,7 @@ struct SignUpFeatureTests {
     @Test func testSubmitNavigatesWhenAgreed() async throws {
         let pathStore = PathStore()
         let router = SignUpRouter(pathStore: pathStore)
-        let context = SignUpContext(dependency: .mock)
-        let feature = SignUpFeature(context: context, router: router)
+        let feature = SignUpFeature(router: router)
         let store = StoreOf<SignUpFeature>(initialState: .init(), feature: feature)
 
         store.send(.toggleAgreement(true))

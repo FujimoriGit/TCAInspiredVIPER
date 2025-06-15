@@ -24,6 +24,14 @@ final class StoreOf<Feature: Reducer> {
     func send(_ action: Feature.Action) {
         
         let effect = feature.reduce(state: &state, action: action)
-        effect.run(send: self.send)
+        effect.run { [weak self] action in
+            
+            guard let self else { return }
+            
+            Task { @MainActor in
+                
+                self.send(action)
+            }
+        }
     }
 }

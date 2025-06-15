@@ -25,7 +25,7 @@ struct SignUpStackView: View {
     
     var body: some View {
         SignUpView(store: makeSignUpStore(router: SignUpRouter(pathStore: pathStore)))
-            .navigationDestination(for: SignUpRoute.self) { route in
+            .navigationDestination(for: SignUpRouter.SignUpRoute.self) { route in
                 
                 switch route {
                     
@@ -43,10 +43,9 @@ struct SignUpStackView: View {
 
 private extension SignUpStackView {
     
-    func makeSignUpStore(router: SignUpWireframe) -> StoreOf<SignUpFeature> {
+    func makeSignUpStore(router: SignUpRouter) -> StoreOf<SignUpFeature> {
 
-        let context = SignUpContext(dependency: .mock)
-        let feature = SignUpFeature(context: context, router: router)
+        let feature = SignUpFeature(router: router)
         return StoreOf<SignUpFeature>(initialState: .init(), feature: feature)
     }
 }
