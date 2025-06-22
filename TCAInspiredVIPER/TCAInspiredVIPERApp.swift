@@ -13,14 +13,25 @@ struct TCAInspiredVIPERApp: App {
     
     // MARK: - private property
     
-    @State private var pathStore = PathStore()
+    @State private var pathStore: PathStore
+    private let store: StoreOf<AppFeature>
+    
+    // MARK: - initialize
+    
+    init() {
+        
+        let pathStore = PathStore()
+        self._pathStore = State(initialValue: pathStore)
+        self.store = StoreOf<AppFeature>(initialState: .init(),
+                                         feature: AppFeature(pathStore: pathStore))
+    }
     
     // MARK: - body
     
     var body: some Scene {
         WindowGroup {
             NavigationStack(path: $pathStore.path) {
-                LoginStackView(pathStore: pathStore)
+                AppView(store: store, pathStore: pathStore)
             }
         }
     }
