@@ -18,12 +18,3 @@
 | **Interactor** | ドメイン処理を担う純粋関数群。副作用は`Effect`生成メソッドとして提供 |
 | **Effect** | API呼び出しや画面遷移など非同期タスクを表す値 |
 | **Context** | `AppDependency`を基にした各Feature用依存注入構造体 |
-
-## テスト
-
-各Featureのテストでは、モック化した`AppDependency`と`Router`を用いることで、Feature単体の動作を検証できます。`swift test`が利用できる環境であれば以下のように実行します。
-
-```bash
-swift test
-```
-
