@@ -14,21 +14,17 @@ struct SignUpStackView: View {
     
     @State private var pathStore: PathStore
     
-    @Bindable private var signUpStore: StoreOf<SignUpFeature>
-    
     // MARK: - initialize
     
-    init(pathStore: PathStore,
-         signUpStore: StoreOf<SignUpFeature>) {
+    init(pathStore: PathStore) {
         
         self.pathStore = pathStore
-        self.signUpStore = signUpStore
     }
 
     // MARK: - body
     
     var body: some View {
-        SignUpView(store: signUpStore)
+        SignUpView(store: makeSignUpStore(router: SignUpRouter(pathStore: pathStore)))
             .navigationDestination(for: SignUpRouter.SignUpRoute.self) { route in
                 
                 switch route {
@@ -40,5 +36,16 @@ struct SignUpStackView: View {
                     Text("Confirm Sign Up")
                 }
             }
+    }
+}
+
+// MARK: - private method
+
+private extension SignUpStackView {
+    
+    func makeSignUpStore(router: SignUpRouter) -> StoreOf<SignUpFeature> {
+
+        let feature = SignUpFeature(router: router)
+        return StoreOf<SignUpFeature>(initialState: .init(), feature: feature)
     }
 }

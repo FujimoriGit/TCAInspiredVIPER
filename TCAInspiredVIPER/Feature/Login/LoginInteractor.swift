@@ -22,7 +22,6 @@ extension LoginInteractor {
                 let user = try await login(context: context,
                                             email: email,
                                             password: password)
-                
                 return .loginSucceeded(user)
             } catch {
                 
