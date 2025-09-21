@@ -14,24 +14,17 @@ struct LoginStackView: View {
     
     @State private var pathStore: PathStore
     
-    @Bindable private var loginStore: StoreOf<LoginFeature>
-    @Bindable private var signUpStore: StoreOf<SignUpFeature>
-    
     // MARK: - initialize
     
-    init(pathStore: PathStore,
-         loginStore: StoreOf<LoginFeature>,
-         signUpStore: StoreOf<SignUpFeature>) {
+    init(pathStore: PathStore) {
         
         self.pathStore = pathStore
-        self.loginStore = loginStore
-        self.signUpStore = signUpStore
     }
 
     // MARK: - body
     
     var body: some View {
-        LoginView(store: loginStore)
+        LoginView(store: makeLoginStore(router: LoginRouter(pathStore: pathStore)))
             .navigationDestination(for: LoginRouter.LoginRoute.self) { route in
                 
                 switch route {
@@ -40,12 +33,27 @@ struct LoginStackView: View {
                     Text("home")
                     
                 case .signUp:
-                    SignUpStackView(pathStore: pathStore,
-                                    signUpStore: signUpStore)
+                    // TODO: EnvironmentObjectにした方がいい？
+                    SignUpStackView(pathStore: pathStore)
                     
                 case .forgotPassword:
                     Text("forgotPassword")
                 }
             }
+    }
+}
+
+// MARK: - private method
+
+private extension LoginStackView {
+    
+    /// ログイン画面用のStoreを作成します.
+    /// - Returns: LoginStore
+    func makeLoginStore(router: LoginRouter) -> StoreOf<LoginFeature> {
+
+        let feature = LoginFeature(router: router)
+        
+        return StoreOf<LoginFeature>(initialState: .init(),
+                                     feature: feature)
     }
 }
